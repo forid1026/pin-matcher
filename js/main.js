@@ -1,59 +1,76 @@
 
-       document.getElementById("generateBtn").addEventListener('click',function(){
-           let pinInput = document.getElementById("pinInput").innerText;
+
+const generateBtn = document.getElementById("generateBtn");
+const pinInput = document.getElementById("pinInput");
+const numberInput = document.getElementById('numberInput');
+const validInput = document.getElementById("validInput");
+const invalidInput = document.getElementById("invalidInput");
+const submitBtn = document.getElementById("submit");
+const countBtn = document.querySelector(".action-left");
+let count = 3;
+
+
+    //generate pin event  handler
+       generateBtn.addEventListener('click',function(){
            let pinInputNumber = Math.floor(1000 + Math.random()*9000);
-           console.log(pinInputNumber);
-           document.getElementById("pinInput").value = pinInputNumber;
-           document.getElementById('numberInput').value = "";
+            pinInput.value = pinInputNumber;
+            numberInput.value = "";
+            invalidInput.style.display = "none";
+            validInput.style.display = "none";
+            countBtn.innerHTML = `${count} try left`;
        })
 
-
+       //inputNumber function use number pad
        function inputNumbers(numbers){
-           document.getElementById("numberInput").value += numbers;
+           numberInput.value += numbers;
        }
 
+       //clear all element from input fill
        function clearNumber(){
-           document.getElementById("numberInput").value = "";
-           document.getElementById("validInput").style.display= "none";
-           document.getElementById("invalidInput").style.display= "none";
-
+           numberInput.value = "";
+           validInput.style.display= "none";
        }
+
+       //back button function
        function backButton(){
-           var exp = document.getElementById("numberInput").value;
-           document.getElementById("numberInput").value = exp.slice(0, - 1);
+           var exp = numberInput.value;
+        numberInput.value = exp.slice(0, - 1);
             
        }
        
-       document.getElementById("submit").addEventListener('click', function(){
+        //submit button event handler
+       submitBtn.addEventListener('click', function(){
+           if(pinInput.value == ""){
+               alert("You must be generate a pin number");
+           }
+           else if(numberInput.value == "" || numberInput.value.length != 4){
+            alert("please input 4 digit number");
+            }  
+             
            
-           const pinInput = document.getElementById('pinInput').value;
-           const numberInput = document.getElementById("numberInput").value;
-           if( pinInput == numberInput){
+           else if( pinInput.value == numberInput.value){
                console.log('match pin');
-               document.getElementById("validInput").style.display = "block";
-           }
-           else if(numberInput == ""){
-               alert("please input a number");
-           }
-           
-        //    else if(pinInput != numberInput){
-        //        console.log('please try again');
-        //        document.getElementById("invalidInput").style.display = "block";
-        //    }
-          
-           else{
-               document.getElementById("invalidInput").style.display = "block";
-               document.getElementById("numberInput").value = "";
-               document.getElementById("validInput").style.display= "none";
+               validInput.style.display = "block";
+               invalidInput.style.display = "none";
+               numberInput.value = "";
+               pinInput.value = "";
 
            }
-           let count = 3;
+               
+           else{
+               invalidInput.style.display = "block";
+               numberInput.value = "";
+               validInput.style.display= "none";
+           }
+
+           
            if(count > 0){
                count --;
-               tryLeft.innerHTML=`${count} try left` ;
-               if(count===0){
-                pinInput.value="";
-                count=3 ;
+               countBtn.innerHTML = `${count} try left`;
+               if(count === 0){
+                pinInput.value = "";
+                submitBtn.disabled = true;
                 }
+     
            }
        })
