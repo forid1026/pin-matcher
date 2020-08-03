@@ -7,7 +7,7 @@ const validInput = document.getElementById("validInput");
 const invalidInput = document.getElementById("invalidInput");
 const submitBtn = document.getElementById("submit");
 const countBtn = document.querySelector(".action-left");
-let count = 3;
+ let count = 3;
 
 
     //generate pin event  handler
@@ -61,16 +61,17 @@ let count = 3;
                invalidInput.style.display = "block";
                numberInput.value = "";
                validInput.style.display= "none";
-           }
-
-           
-           if(count > 0){
-               count --;
-               countBtn.innerHTML = `${count} try left`;
-               if(count === 0){
-                pinInput.value = "";
-                submitBtn.disabled = true;
+               
+               
+             if(count > 0){
+                 count --;
+                 countBtn.innerHTML = `${count} try left`;
+                 if(count == 0){
+                    pinInput.value = "";
+                    count = 3;
+                    }
                 }
-     
            }
+     
+           
        })
